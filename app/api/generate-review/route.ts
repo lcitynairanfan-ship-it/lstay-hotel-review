@@ -105,7 +105,7 @@ Output instructions:
       const err = await response.text();
       console.error("OpenAI error:", err);
       return NextResponse.json(
-        { error: "OpenAI APIエラーが発生しました" },
+        { error: `OpenAI error ${response.status}: ${err.slice(0, 200)}` },
         { status: 500 }
       );
     }
