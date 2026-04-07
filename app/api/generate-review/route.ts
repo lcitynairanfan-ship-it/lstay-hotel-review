@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
 
 export const runtime = "edge";
-
-const HOTEL_CONTEXT = `
-民泊施設「L-STAY HOTEL」について:
-- 場所: 愛知県名古屋市周辺
-- 特徴: 清潔感のある部屋、アクセス良好、アットホームな雰囲気、長期滞在も可能
-- ターゲット: 旅行者・出張者・留学生
-`;
 
 const LANGUAGE_INSTRUCTIONS: Record<string, string> = {
   ja: "必ず日本語のみでレビュー文を書いてください。他の言語は使わないでください。",
@@ -56,7 +48,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const client = new OpenAI({ apiKey });
     const lang = language || "ja";
     const stars = rating || 5;
 
@@ -74,8 +65,7 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join("\n");
 
-    const prompt = `
-You are a professional review writer for a minpaku (short-term rental) hotel.
+    const prompt = `You are a professional review writer for a minpaku (short-term rental) hotel.
 Generate one natural and realistic guest review based on the information below.
 
 OUTPUT LANGUAGE RULE (CRITICAL): ${LANGUAGE_INSTRUCTIONS[lang]}
@@ -84,29 +74,46 @@ About the property:
 - Name: L-STAY HOTEL
 - Location: Aichi, Japan (near Nagoya)
 - Features: Clean rooms, good access, homey atmosphere, suitable for long stays
-- Guests: Travelers, business visitors, international students
 
 Guest input:
 - Rating: ${stars} out of 5 stars
 ${selectionInfo}
 
 Output instructions:
-- Length: 100–200 characters in Japanese/Korean/Thai, 50–100 words in English/Chinese/Vietnamese
+- Length: 100-200 characters in Japanese/Korean/Thai, 50-100 words in English/Chinese/Vietnamese
 - Write in a natural, authentic guest voice
 - Avoid excessive marketing language
-- Naturally incorporate the selected information (purpose, highlights, revisit intention, origin)
+- Naturally incorporate the selected information
 - Example style: ${LANGUAGE_EXAMPLES[lang]}
-- Output the review text ONLY — no introduction, no explanation
-`;
+- Output the review text ONLY — no introduction, no explanation`;
 
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 400,
-      temperature: 0.8,
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 400,
+        temperature: 0.8,
+      }),
     });
 
-    const review = response.choices[0]?.message?.content?.trim();
+    if (!response.ok) {
+      const err = await response.text();
+      console.error("OpenAI error:", err);
+      return NextResponse.json(
+        { error: "OpenAI APIエラーが発生しました" },
+        { status: 500 }
+      );
+    }
+
+    const data = await response.json() as {
+      choices: { message: { content: string } }[];
+    };
+    const review = data.choices[0]?.message?.content?.trim();
 
     if (!review) {
       return NextResponse.json(
