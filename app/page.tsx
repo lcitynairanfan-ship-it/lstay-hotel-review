@@ -63,7 +63,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "清潔さ", label: "✨ 清潔さ" },
         { value: "アクセス・立地", label: "📍 アクセス・立地" },
-        { value: "スタッフの対応", label: "🤝 スタッフの対応" },
+        { value: "使い方がわかりやすかった", label: "🗝️ 使い方がわかりやすい" },
         { value: "設備・アメニティ", label: "🛋️ 設備・アメニティ" },
       ],
     },
@@ -106,7 +106,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "Cleanliness", label: "✨ Cleanliness" },
         { value: "Location & Access", label: "📍 Location & Access" },
-        { value: "Staff Service", label: "🤝 Staff Service" },
+        { value: "Easy to use & clear guide", label: "🗝️ Easy to use" },
         { value: "Facilities & Amenities", label: "🛋️ Facilities & Amenities" },
       ],
     },
@@ -149,7 +149,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "干净整洁", label: "✨ 干净整洁" },
         { value: "交通位置", label: "📍 交通位置" },
-        { value: "员工服务", label: "🤝 员工服务" },
+        { value: "使用说明清晰易懂", label: "🗝️ 说明清晰易懂" },
         { value: "设施设备", label: "🛋️ 设施设备" },
       ],
     },
@@ -192,7 +192,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "청결함", label: "✨ 청결함" },
         { value: "접근성·위치", label: "📍 접근성·위치" },
-        { value: "직원 서비스", label: "🤝 직원 서비스" },
+        { value: "이용 방법이 알기 쉬웠다", label: "🗝️ 이용법이 알기 쉬움" },
         { value: "시설·어메니티", label: "🛋️ 시설·어메니티" },
       ],
     },
@@ -235,7 +235,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "Sạch sẽ", label: "✨ Sạch sẽ" },
         { value: "Vị trí thuận tiện", label: "📍 Vị trí thuận tiện" },
-        { value: "Dịch vụ nhân viên", label: "🤝 Dịch vụ nhân viên" },
+        { value: "Hướng dẫn sử dụng rõ ràng", label: "🗝️ Hướng dẫn rõ ràng" },
         { value: "Tiện nghi", label: "🛋️ Tiện nghi" },
       ],
     },
@@ -278,7 +278,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
       options: [
         { value: "ความสะอาด", label: "✨ ความสะอาด" },
         { value: "ทำเลที่ตั้ง", label: "📍 ทำเลที่ตั้ง" },
-        { value: "การบริการ", label: "🤝 การบริการ" },
+        { value: "คู่มือใช้งานเข้าใจง่าย", label: "🗝️ คู่มือเข้าใจง่าย" },
         { value: "สิ่งอำนวยความสะดวก", label: "🛋️ สิ่งอำนวยความสะดวก" },
       ],
     },
@@ -928,13 +928,59 @@ export default function Home() {
         .footer p { color: rgba(255,255,255,0.2); font-size: 11px; letter-spacing: 3px; }
         .footer span { color: rgba(201,168,76,0.6); }
 
+        /* ── モバイル最適化 ── */
         @media (max-width: 600px) {
-          .card { padding: 24px 20px; }
-          .header-inner { flex-direction: column; height: auto; padding: 12px 16px; gap: 10px; }
-          .lang-buttons { justify-content: center; }
-          .hero { padding: 40px 16px 32px; }
-          .options-grid { gap: 6px; }
-          .option-btn { padding: 7px 12px; font-size: 11px; }
+          /* タップ操作の誤爆防止 */
+          * { -webkit-tap-highlight-color: transparent; }
+
+          .header-inner {
+            flex-direction: column;
+            height: auto;
+            padding: 10px 12px;
+            gap: 8px;
+          }
+          .logo-main { font-size: 18px; letter-spacing: 4px; }
+          .logo-sub { font-size: 9px; }
+          .lang-buttons { justify-content: center; gap: 5px; }
+          .lang-btn { padding: 6px 10px; font-size: 12px; min-height: 36px; }
+
+          .hero { padding: 28px 16px 20px; }
+          .hero-badge { font-size: 9px; letter-spacing: 4px; padding: 5px 14px; }
+          .hero-title { font-size: 26px; letter-spacing: 2px; }
+          .hero-sub { font-size: 12px; }
+
+          .main { padding: 0 12px 48px; }
+          .card { padding: 24px 16px; }
+
+          /* 星ボタン：大きめに */
+          .star-btn { font-size: 36px; }
+          .rating-text { font-size: 14px; }
+
+          /* 選択肢ボタン：タップしやすく */
+          .options-grid { gap: 8px; }
+          .option-btn {
+            padding: 12px 14px;
+            font-size: 13px;
+            min-height: 44px;
+            flex: 1 1 calc(50% - 4px);
+          }
+
+          /* テキストエリア */
+          .notes-textarea { font-size: 16px; padding: 14px; } /* 16px以上でiOSズーム防止 */
+
+          /* ボタン類：タップしやすく */
+          .generate-btn { padding: 20px; font-size: 13px; min-height: 56px; }
+          .google-btn { padding: 18px; font-size: 12px; min-height: 54px; }
+          .regen-btn { padding: 16px; min-height: 48px; }
+
+          /* アクションボタン */
+          .action-btn { padding: 8px 14px; font-size: 11px; min-height: 36px; }
+
+          /* レビュー結果 */
+          .review-box { padding: 20px 16px; font-size: 14px; line-height: 1.9; }
+          .auto-copy-notice { font-size: 11px; }
+
+          .footer p { font-size: 10px; letter-spacing: 1px; }
         }
       `}</style>
 
