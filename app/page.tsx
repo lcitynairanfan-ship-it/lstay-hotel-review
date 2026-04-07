@@ -321,6 +321,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "宿泊目的か感想を選択・入力してください",
     google_btn: "Googleレビューに投稿する",
     auto_copied: "✓ レビュー文をコピーしました — 貼り付けてご投稿ください",
+    thank_you: "アンケートにご協力ありがとうございました。\nご意見を今後のサービス向上に活かしてまいります。",
   },
   en: {
     subtitle: "Enter your impressions and we'll craft a polished review for you",
@@ -334,6 +335,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "Please select at least one option above",
     google_btn: "Post to Google Reviews",
     auto_copied: "✓ Review copied — paste it on Google",
+    thank_you: "Thank you for your feedback.\nWe will use your comments to improve our service.",
   },
   zh: {
     subtitle: "输入您的感想，AI自动生成精美评价文",
@@ -347,6 +349,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "请至少选择一个选项",
     google_btn: "发布到Google评价",
     auto_copied: "✓ 评价已复制 — 请粘贴到Google",
+    thank_you: "感谢您参与问卷调查。\n我们将认真参考您的意见，不断改善服务。",
   },
   ko: {
     subtitle: "숙박 감상을 입력하면 AI가 리뷰를 자동 생성합니다",
@@ -360,6 +363,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "위 항목 중 하나 이상을 선택해 주세요",
     google_btn: "Google 리뷰에 게시하기",
     auto_copied: "✓ 리뷰가 복사되었습니다 — Google에 붙여넣기 하세요",
+    thank_you: "설문에 참여해 주셔서 감사합니다.\n소중한 의견을 서비스 개선에 반영하겠습니다.",
   },
   vi: {
     subtitle: "Nhập cảm nhận của bạn, AI sẽ tạo bài đánh giá hoàn chỉnh",
@@ -373,6 +377,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "Vui lòng chọn ít nhất một mục ở trên",
     google_btn: "Đăng lên Google Reviews",
     auto_copied: "✓ Đã sao chép — Dán vào Google để đăng",
+    thank_you: "Cảm ơn bạn đã tham gia khảo sát.\nChúng tôi sẽ cải thiện dịch vụ dựa trên ý kiến của bạn.",
   },
   th: {
     subtitle: "กรอกความรู้สึกของคุณ แล้ว AI จะสร้างรีวิวให้อัตโนมัติ",
@@ -386,6 +391,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     placeholder_hint: "กรุณาเลือกอย่างน้อยหนึ่งตัวเลือกด้านบน",
     google_btn: "โพสต์ไปยัง Google Reviews",
     auto_copied: "✓ คัดลอกแล้ว — วางลงใน Google เพื่อโพสต์",
+    thank_you: "ขอบคุณที่ร่วมตอบแบบสอบถาม\nเราจะนำความคิดเห็นของคุณไปปรับปรุงบริการต่อไป",
   },
 };
 
@@ -398,6 +404,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [autoCopied, setAutoCopied] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
   const [answers, setAnswers] = useState<[string, string, string, string]>(["", "", "", ""]);
 
@@ -419,9 +426,16 @@ export default function Home() {
       setError(t.placeholder_hint);
       return;
     }
+    // ☆1・☆2はアンケートのみ
+    if (rating <= 2) {
+      setShowThankYou(true);
+      setReview("");
+      return;
+    }
     setLoading(true);
     setError("");
     setReview("");
+    setShowThankYou(false);
     setAutoCopied(false);
     try {
       const res = await fetch("/api/generate-review", {
@@ -928,6 +942,23 @@ export default function Home() {
         .footer p { color: rgba(255,255,255,0.2); font-size: 11px; letter-spacing: 3px; }
         .footer span { color: rgba(201,168,76,0.6); }
 
+        /* お礼メッセージ */
+        .thank-you-box {
+          margin-top: 28px;
+          padding: 32px 24px;
+          background: rgba(201,168,76,0.06);
+          border: 1px solid rgba(201,168,76,0.25);
+          border-radius: 2px;
+          text-align: center;
+        }
+        .thank-you-icon { font-size: 36px; margin-bottom: 16px; }
+        .thank-you-box p {
+          color: rgba(240,235,226,0.85);
+          font-size: 14px;
+          line-height: 2;
+          white-space: pre-line;
+        }
+
         /* ── モバイル最適化 ── */
         @media (max-width: 600px) {
           /* タップ操作の誤爆防止 */
@@ -1089,6 +1120,14 @@ export default function Home() {
               >
                 {loading ? t.generating : t.generate}
               </button>
+
+              {/* ☆1・☆2 お礼メッセージ */}
+              {showThankYou && (
+                <div className="thank-you-box">
+                  <div className="thank-you-icon">🙏</div>
+                  <p>{t.thank_you}</p>
+                </div>
+              )}
 
               {/* 結果 */}
               {review && (
