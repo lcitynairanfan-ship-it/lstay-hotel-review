@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
+export const runtime = "edge";
+
 const HOTEL_CONTEXT = `
 民泊施設「L-STAY HOTEL」について:
 - 場所: 愛知県名古屋市周辺
