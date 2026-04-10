@@ -1,6 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export const runtime = "edge";
+
+interface KVNamespace {
+  get(key: string): Promise<string | null>;
+  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+}
+
+async function checkRateLimit(req: NextRequest): Promise<boolean> {
+  try {
+    const { env } = getRequestContext();
+    const kv = (env as Record<string, unknown>).RATE_LIMIT_KV as KVNamespace | undefined;
+    if (!kv) return true; // KV未設定時はスキップ
+
+    const ip =
+      req.headers.get("CF-Connecting-IP") ||
+      req.headers.get("X-Forwarded-For")?.split(",")[0].trim() ||
+      "unknown";
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const key = `rl:${ip}:${today}`;
+
+    const countStr = await kv.get(key);
+    const count = countStr ? parseInt(countStr, 10) : 0;
+
+    if (count >= 5) return false; // 上限超過
+
+    await kv.put(key, String(count + 1), { expirationTtl: 90000 }); // 25時間で自動削除
+    return true;
+  } catch {
+    return true; // エラー時はスキップ（ローカル開発など）
+  }
+}
 
 const LANGUAGE_INSTRUCTIONS: Record<string, string> = {
   ja: "必ず日本語のみでレビュー文を書いてください。他の言語は使わないでください。",
@@ -21,6 +52,14 @@ const LANGUAGE_EXAMPLES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
+  const allowed = await checkRateLimit(req);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "本日の利用回数の上限（5回）に達しました。明日またお試しください。" },
+      { status: 429 }
+    );
+  }
+
   try {
     const { notes, language, rating, answers } = await req.json() as {
       notes: string;
