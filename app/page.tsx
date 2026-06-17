@@ -7,11 +7,10 @@ const LANGUAGES = [
   { code: "en", label: "English",  flag: "🇺🇸" },
   { code: "zh", label: "中文",     flag: "🇨🇳" },
   { code: "ko", label: "한국어",   flag: "🇰🇷" },
-  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
   { code: "th", label: "ภาษาไทย",  flag: "🇹🇭" },
 ] as const;
 
-type LangCode = "ja" | "en" | "zh" | "ko" | "vi" | "th";
+type LangCode = "ja" | "en" | "zh" | "ko" | "th";
 
 const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJc_cJI_5xA2ARrOoMZIhxjcw";
 
@@ -20,17 +19,15 @@ const RATING_LABELS: Record<LangCode, string[]> = {
   en: ["Terrible", "Bad", "Okay", "Good", "Excellent"],
   zh: ["很差", "差", "一般", "好", "非常好"],
   ko: ["최악", "나쁨", "보통", "좋음", "최고"],
-  vi: ["Tệ", "Kém", "Bình thường", "Tốt", "Xuất sắc"],
   th: ["แย่มาก", "แย่", "ปานกลาง", "ดี", "ดีมาก"],
 };
 
 const PLACEHOLDERS: Record<LangCode, string> = {
-  ja: "例：部屋が清潔で、駅から近くて便利でした。（任意）",
-  en: "e.g. The room was clean and close to the station. (optional)",
-  zh: "例：房间干净，离地铁站很近。（可选）",
-  ko: "예: 방이 깨끗하고 역에서 가까워 편리했습니다. (선택사항)",
-  vi: "Ví dụ: Phòng sạch sẽ, gần ga tàu. (tùy chọn)",
-  th: "เช่น ห้องสะอาดมาก อยู่ใกล้สถานีรถไฟ (ไม่บังคับ)",
+  ja: "例：部屋が清潔で、駅から近くて便利でした。",
+  en: "e.g. The room was clean and close to the station.",
+  zh: "例：房间干净，离地铁站很近。",
+  ko: "예: 방이 깨끗하고 역에서 가까워 편리했습니다.",
+  th: "เช่น ห้องสะอาดมาก อยู่ใกล้สถานีรถไฟ",
 };
 
 const SNS_SHARE_TEXT: Record<LangCode, string> = {
@@ -38,7 +35,6 @@ const SNS_SHARE_TEXT: Record<LangCode, string> = {
   en: "I stayed at L-STAY HOTEL!",
   zh: "我住了L-STAY HOTEL！",
   ko: "L-STAY HOTEL에 묵었습니다!",
-  vi: "Tôi đã ở tại L-STAY HOTEL!",
   th: "ฉันพักที่ L-STAY HOTEL!",
 };
 
@@ -47,7 +43,9 @@ interface QuestionDef {
   options: { value: string; label: string }[];
 }
 
-const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, QuestionDef]> = {
+type SixAnswers = [string, string, string, string, string, string];
+
+const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, QuestionDef, QuestionDef, QuestionDef]> = {
   ja: [
     {
       label: "宿泊目的",
@@ -88,6 +86,23 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
         { value: "中国", label: "🇨🇳 中国" },
         { value: "東南アジア", label: "🌏 東南アジア" },
         { value: "その他海外", label: "✈️ その他海外" },
+      ],
+    },
+    {
+      label: "何名でお越しですか？",
+      options: [
+        { value: "一人旅", label: "🧳 一人旅" },
+        { value: "2名", label: "👫 2名" },
+        { value: "3〜4名", label: "👨‍👩‍👧 3〜4名" },
+        { value: "5名以上", label: "👥 5名以上" },
+      ],
+    },
+    {
+      label: "友人・知人に勧めますか？",
+      options: [
+        { value: "ぜひ勧めたい", label: "💬 ぜひ勧めたい" },
+        { value: "合う人には勧める", label: "👌 合う人には勧める" },
+        { value: "どちらでもない", label: "🤷 どちらでもない" },
       ],
     },
   ],
@@ -133,6 +148,23 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
         { value: "Other overseas", label: "✈️ Other overseas" },
       ],
     },
+    {
+      label: "Number of Guests",
+      options: [
+        { value: "Solo", label: "🧳 Solo" },
+        { value: "2 guests", label: "👫 2 guests" },
+        { value: "3-4 guests", label: "👨‍👩‍👧 3-4 guests" },
+        { value: "5 or more", label: "👥 5 or more" },
+      ],
+    },
+    {
+      label: "Would You Recommend?",
+      options: [
+        { value: "Absolutely", label: "💬 Absolutely" },
+        { value: "Depends on the person", label: "👌 Depends on the person" },
+        { value: "Not sure", label: "🤷 Not sure" },
+      ],
+    },
   ],
   zh: [
     {
@@ -174,6 +206,23 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
         { value: "中国大陆", label: "🇨🇳 中国" },
         { value: "东南亚", label: "🌏 东南亚" },
         { value: "其他海外", label: "✈️ 其他海外" },
+      ],
+    },
+    {
+      label: "几位入住？",
+      options: [
+        { value: "独自一人", label: "🧳 独自一人" },
+        { value: "2人", label: "👫 2人" },
+        { value: "3〜4人", label: "👨‍👩‍👧 3〜4人" },
+        { value: "5人以上", label: "👥 5人以上" },
+      ],
+    },
+    {
+      label: "您会推荐给朋友吗？",
+      options: [
+        { value: "强烈推荐", label: "💬 强烈推荐" },
+        { value: "视情况而定", label: "👌 视情况而定" },
+        { value: "不确定", label: "🤷 不确定" },
       ],
     },
   ],
@@ -219,47 +268,21 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
         { value: "기타 해외", label: "✈️ 기타 해외" },
       ],
     },
-  ],
-  vi: [
     {
-      label: "Mục đích lưu trú",
+      label: "몇 명이서 오셨나요?",
       options: [
-        { value: "Du lịch", label: "🗺️ Du lịch" },
-        { value: "Công tác", label: "💼 Công tác" },
-        { value: "Lưu trú dài hạn", label: "🏠 Lưu trú dài hạn" },
-        { value: "Khác", label: "✦ Khác" },
+        { value: "혼자", label: "🧳 혼자" },
+        { value: "2명", label: "👫 2명" },
+        { value: "3〜4명", label: "👨‍👩‍👧 3〜4명" },
+        { value: "5명 이상", label: "👥 5명 이상" },
       ],
     },
     {
-      label: "Điểm nổi bật nhất",
+      label: "친구에게 추천하시겠어요?",
       options: [
-        { value: "Sạch sẽ", label: "✨ Sạch sẽ" },
-        { value: "Vị trí thuận tiện", label: "📍 Vị trí thuận tiện" },
-        { value: "Hướng dẫn sử dụng rõ ràng", label: "🗝️ Hướng dẫn rõ ràng" },
-        { value: "Tiện nghi", label: "🛋️ Tiện nghi" },
-      ],
-    },
-    {
-      label: "Bạn có muốn quay lại không?",
-      options: [
-        { value: "Chắc chắn sẽ quay lại", label: "⭐ Chắc chắn sẽ quay lại" },
-        { value: "Nếu có cơ hội", label: "👍 Nếu có cơ hội" },
-        { value: "Chưa chắc", label: "🤔 Chưa chắc" },
-      ],
-    },
-    {
-      label: "Bạn đến từ đâu?",
-      options: [
-        { value: "Aichi・Tokai", label: "🗾 Aichi・Tokai" },
-        { value: "Hokkaido・Tohoku", label: "🌨️ Hokkaido・Tohoku" },
-        { value: "Kanto（Tokyo v.v.）", label: "🗼 Kanto" },
-        { value: "Kansai（Osaka・Kyoto v.v.）", label: "⛩️ Kansai" },
-        { value: "Chugoku・Shikoku", label: "🌊 Chugoku・Shikoku" },
-        { value: "Kyushu・Okinawa", label: "🌺 Kyushu・Okinawa" },
-        { value: "Hàn Quốc", label: "🇰🇷 Hàn Quốc" },
-        { value: "Trung Quốc", label: "🇨🇳 Trung Quốc" },
-        { value: "Đông Nam Á", label: "🌏 Đông Nam Á" },
-        { value: "Nước ngoài khác", label: "✈️ Nước ngoài khác" },
+        { value: "꼭 추천하고 싶다", label: "💬 꼭 추천하고 싶다" },
+        { value: "사람에 따라", label: "👌 사람에 따라" },
+        { value: "잘 모르겠다", label: "🤷 잘 모르겠다" },
       ],
     },
   ],
@@ -305,6 +328,23 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
         { value: "ต่างประเทศอื่นๆ", label: "✈️ ต่างประเทศอื่นๆ" },
       ],
     },
+    {
+      label: "คุณมากี่คน?",
+      options: [
+        { value: "คนเดียว", label: "🧳 คนเดียว" },
+        { value: "2 คน", label: "👫 2 คน" },
+        { value: "3-4 คน", label: "👨‍👩‍👧 3-4 คน" },
+        { value: "5 คนขึ้นไป", label: "👥 5 คนขึ้นไป" },
+      ],
+    },
+    {
+      label: "คุณจะแนะนำให้เพื่อนไหม?",
+      options: [
+        { value: "แนะนำอย่างแน่นอน", label: "💬 แนะนำอย่างแน่นอน" },
+        { value: "ขึ้นอยู่กับบุคคล", label: "👌 ขึ้นอยู่กับบุคคล" },
+        { value: "ไม่แน่ใจ", label: "🤷 ไม่แน่ใจ" },
+      ],
+    },
   ],
 };
 
@@ -312,7 +352,8 @@ const LABELS: Record<LangCode, Record<string, string>> = {
   ja: {
     subtitle: "ご宿泊の感想を入力するだけで、レビュー文を自動生成します",
     rating: "総合評価",
-    notes: "感想・メモ（任意）",
+    notes: "一言コメント（必須）",
+    notes_required: "コメントを入力してください（必須項目です）",
     chars: "文字",
     generate: "レビューを生成する",
     generating: "生成中...",
@@ -326,7 +367,8 @@ const LABELS: Record<LangCode, Record<string, string>> = {
   en: {
     subtitle: "Enter your impressions and we'll craft a polished review for you",
     rating: "Overall Rating",
-    notes: "Your Notes (optional)",
+    notes: "Your Comment (required)",
+    notes_required: "Please enter your comment (required)",
     chars: "chars",
     generate: "Generate Review",
     generating: "Generating...",
@@ -340,7 +382,8 @@ const LABELS: Record<LangCode, Record<string, string>> = {
   zh: {
     subtitle: "输入您的感想，AI自动生成精美评价文",
     rating: "综合评分",
-    notes: "您的感想（可选）",
+    notes: "您的感想（必填）",
+    notes_required: "请输入您的感想（必填项）",
     chars: "字",
     generate: "生成评价",
     generating: "生成中...",
@@ -354,7 +397,8 @@ const LABELS: Record<LangCode, Record<string, string>> = {
   ko: {
     subtitle: "숙박 감상을 입력하면 AI가 리뷰를 자동 생성합니다",
     rating: "종합 평가",
-    notes: "감상 메모 (선택사항)",
+    notes: "감상 메모 (필수)",
+    notes_required: "감상 메모를 입력해 주세요 (필수 항목)",
     chars: "자",
     generate: "리뷰 생성하기",
     generating: "생성 중...",
@@ -365,24 +409,11 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ 리뷰가 복사되었습니다 — Google에 붙여넣기 하세요",
     thank_you: "설문에 참여해 주셔서 감사합니다.\n소중한 의견을 서비스 개선에 반영하겠습니다.",
   },
-  vi: {
-    subtitle: "Nhập cảm nhận của bạn, AI sẽ tạo bài đánh giá hoàn chỉnh",
-    rating: "Đánh giá tổng thể",
-    notes: "Ghi chú của bạn (tùy chọn)",
-    chars: "ký tự",
-    generate: "Tạo đánh giá",
-    generating: "Đang tạo...",
-    result: "Đánh giá đã tạo",
-    regenerate: "Tạo lại",
-    placeholder_hint: "Vui lòng chọn ít nhất một mục ở trên",
-    google_btn: "Đăng lên Google Reviews",
-    auto_copied: "✓ Đã sao chép — Dán vào Google để đăng",
-    thank_you: "Cảm ơn bạn đã tham gia khảo sát.\nChúng tôi sẽ cải thiện dịch vụ dựa trên ý kiến của bạn.",
-  },
   th: {
     subtitle: "กรอกความรู้สึกของคุณ แล้ว AI จะสร้างรีวิวให้อัตโนมัติ",
     rating: "คะแนนโดยรวม",
-    notes: "บันทึกของคุณ (ไม่บังคับ)",
+    notes: "ความคิดเห็น (จำเป็น)",
+    notes_required: "กรุณากรอกความคิดเห็น (จำเป็น)",
     chars: "ตัวอักษร",
     generate: "สร้างรีวิว",
     generating: "กำลังสร้าง...",
@@ -406,24 +437,22 @@ export default function Home() {
   const [autoCopied, setAutoCopied] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
-  const [answers, setAnswers] = useState<[string, string, string, string]>(["", "", "", ""]);
+  const [answers, setAnswers] = useState<SixAnswers>(["", "", "", "", "", ""]);
 
   const t = LABELS[language];
   const questions = QUESTIONS[language];
 
-  const setAnswer = (idx: 0 | 1 | 2 | 3, value: string) => {
+  const setAnswer = (idx: 0 | 1 | 2 | 3 | 4 | 5, value: string) => {
     setAnswers((prev) => {
-      const next: [string, string, string, string] = [...prev] as [string, string, string, string];
+      const next: SixAnswers = [...prev] as SixAnswers;
       next[idx] = value;
       return next;
     });
   };
 
-  const hasInput = answers.some((a) => a !== "") || notes.trim().length > 0;
-
   const generateReview = async () => {
-    if (!hasInput) {
-      setError(t.placeholder_hint);
+    if (!notes.trim()) {
+      setError(t.notes_required);
       return;
     }
     // ☆1・☆2はアンケートのみ
@@ -1087,7 +1116,7 @@ export default function Home() {
                       <button
                         key={opt.value}
                         className={`option-btn ${answers[idx] === opt.value ? "selected" : ""}`}
-                        onClick={() => setAnswer(idx as 0 | 1 | 2 | 3, answers[idx] === opt.value ? "" : opt.value)}
+                        onClick={() => setAnswer(idx as 0 | 1 | 2 | 3 | 4 | 5, answers[idx] === opt.value ? "" : opt.value)}
                       >
                         {opt.label}
                       </button>
