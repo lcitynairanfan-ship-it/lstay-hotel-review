@@ -1222,7 +1222,7 @@ export default function Home() {
             <p className="hero-sub">{t.subtitle}</p>
             <div className="gift-banner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/starbucks-logo.png" alt="Starbucks" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+              <img src="/starbucks-logo.webp" alt="Starbucks" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
               <span>{t.gift_banner}</span>
             </div>
             <div className="divider" style={{ marginTop: 24 }}>
