@@ -7,3 +7,8 @@ pages_build_output_dir = ".vercel/output/static"
 [[kv_namespaces]]
 binding = "RATE_LIMIT_KV"
 id = "6aac7affe13847c989c7ad810572192d"
+
+[[d1_databases]]
+binding = "GIFT_DB"
+database_name = "lstay-gift-db"
+database_id = "52ec0e2b-0d9a-405c-9154-bea01b46498b"
