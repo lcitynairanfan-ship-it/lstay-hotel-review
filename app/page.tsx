@@ -350,7 +350,7 @@ const QUESTIONS: Record<LangCode, [QuestionDef, QuestionDef, QuestionDef, Questi
 
 const LABELS: Record<LangCode, Record<string, string>> = {
   ja: {
-    subtitle: "ご宿泊の感想を入力するだけで、レビュー文を自動生成します",
+    subtitle: "アンケートにご回答＆Googleクチコミを投稿いただいた方に\nスターバックスeギフトをプレゼントしています☕",
     rating: "総合評価",
     notes: "一言コメント（必須）",
     notes_required: "コメントを入力してください（必須項目です）",
@@ -368,16 +368,21 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     gift_title: "☕ スタバギフトを受け取る",
     gmail_label: "Gmailアドレスを入力",
     gmail_placeholder: "example@gmail.com",
-    gmail_note: "ギフト管理のためGmailアドレスが必要です（不正防止）",
+    gmail_note: "入力したGmailアドレスにギフトURLをメールで送信します",
     claim_btn: "ギフトURLを受け取る",
     claiming: "処理中...",
     gift_url_label: "スタバギフトURL",
     gift_already: "このGmailアドレスはすでに受け取り済みです",
     gift_tap: "タップして開く",
     gmail_invalid: "有効なGmailアドレスを入力してください (@gmail.com)",
+    email_sent: "✅ ギフトURLをGmailに送信しました。メールをご確認ください。",
+    email_not_sent: "⚠️ メール送信に失敗しました。下のURLをコピーして保存してください。",
+    copy_url: "URLをコピー",
+    copied_url: "コピーしました",
+    gift_banner: "スターバックスeギフト プレゼント中",
   },
   en: {
-    subtitle: "Enter your impressions and we'll craft a polished review for you",
+    subtitle: "Complete our survey & post a Google review\nto receive a Starbucks e-Gift ☕",
     rating: "Overall Rating",
     notes: "Your Comment (required)",
     notes_required: "Please enter your comment (required)",
@@ -395,16 +400,21 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     gift_title: "☕ Receive Starbucks Gift",
     gmail_label: "Enter Gmail Address",
     gmail_placeholder: "example@gmail.com",
-    gmail_note: "Gmail required for gift management (anti-fraud)",
+    gmail_note: "The gift URL will be sent to this Gmail address",
     claim_btn: "Receive Gift URL",
     claiming: "Processing...",
     gift_url_label: "Starbucks Gift URL",
     gift_already: "This Gmail has already received a gift",
     gift_tap: "Tap to open",
     gmail_invalid: "Please enter a valid Gmail address (@gmail.com)",
+    email_sent: "✅ Gift URL sent to your Gmail. Please check your inbox.",
+    email_not_sent: "⚠️ Email failed. Please copy and save the URL below.",
+    copy_url: "Copy URL",
+    copied_url: "Copied!",
+    gift_banner: "Starbucks e-Gift Available",
   },
   zh: {
-    subtitle: "输入您的感想，AI自动生成精美评价文",
+    subtitle: "完成问卷并发布Google评价\n即可获得星巴克电子礼品 ☕",
     rating: "综合评分",
     notes: "您的感想（必填）",
     notes_required: "请输入您的感想（必填项）",
@@ -422,16 +432,21 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     gift_title: "☕ 领取星巴克礼品",
     gmail_label: "输入Gmail地址",
     gmail_placeholder: "example@gmail.com",
-    gmail_note: "需要Gmail用于礼品管理（防止欺诈）",
+    gmail_note: "礼品URL将通过邮件发送到您的Gmail地址",
     claim_btn: "领取礼品URL",
     claiming: "处理中...",
     gift_url_label: "星巴克礼品URL",
     gift_already: "该Gmail地址已领取过礼品",
     gift_tap: "点击打开",
     gmail_invalid: "请输入有效的Gmail地址 (@gmail.com)",
+    email_sent: "✅ 礼品URL已发送至您的Gmail，请查收邮件。",
+    email_not_sent: "⚠️ 邮件发送失败，请复制并保存以下URL。",
+    copy_url: "复制URL",
+    copied_url: "已复制",
+    gift_banner: "星巴克电子礼品赠送中",
   },
   ko: {
-    subtitle: "숙박 감상을 입력하면 AI가 리뷰를 자동 생성합니다",
+    subtitle: "설문에 답하고 Google 리뷰를 작성하시면\n스타벅스 e기프트를 드립니다 ☕",
     rating: "종합 평가",
     notes: "감상 메모 (필수)",
     notes_required: "감상 메모를 입력해 주세요 (필수 항목)",
@@ -449,16 +464,21 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     gift_title: "☕ 스타벅스 기프트 받기",
     gmail_label: "Gmail 주소 입력",
     gmail_placeholder: "example@gmail.com",
-    gmail_note: "기프트 관리를 위해 Gmail이 필요합니다 (부정 방지)",
+    gmail_note: "입력한 Gmail 주소로 기프트 URL을 이메일로 발송합니다",
     claim_btn: "기프트 URL 받기",
     claiming: "처리 중...",
     gift_url_label: "스타벅스 기프트 URL",
     gift_already: "이 Gmail은 이미 기프트를 받았습니다",
     gift_tap: "탭하여 열기",
     gmail_invalid: "유효한 Gmail 주소를 입력해 주세요 (@gmail.com)",
+    email_sent: "✅ 기프트 URL을 Gmail로 발송했습니다. 메일함을 확인해 주세요.",
+    email_not_sent: "⚠️ 이메일 발송에 실패했습니다. 아래 URL을 복사해 저장해 주세요.",
+    copy_url: "URL 복사",
+    copied_url: "복사됨",
+    gift_banner: "스타벅스 e기프트 증정 중",
   },
   th: {
-    subtitle: "กรอกความรู้สึกของคุณ แล้ว AI จะสร้างรีวิวให้อัตโนมัติ",
+    subtitle: "ตอบแบบสอบถามและโพสต์รีวิว Google\nรับ Starbucks e-Gift ☕",
     rating: "คะแนนโดยรวม",
     notes: "ความคิดเห็น (จำเป็น)",
     notes_required: "กรุณากรอกความคิดเห็น (จำเป็น)",
@@ -476,13 +496,18 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     gift_title: "☕ รับของขวัญ Starbucks",
     gmail_label: "กรอกที่อยู่ Gmail",
     gmail_placeholder: "example@gmail.com",
-    gmail_note: "ต้องใช้ Gmail เพื่อจัดการของขวัญ (ป้องกันการทุจริต)",
+    gmail_note: "Gift URL จะถูกส่งไปยังที่อยู่ Gmail ที่คุณกรอก",
     claim_btn: "รับ Gift URL",
     claiming: "กำลังดำเนินการ...",
     gift_url_label: "Starbucks Gift URL",
     gift_already: "Gmail นี้ได้รับของขวัญแล้ว",
     gift_tap: "แตะเพื่อเปิด",
     gmail_invalid: "กรุณากรอกที่อยู่ Gmail ที่ถูกต้อง (@gmail.com)",
+    email_sent: "✅ ส่ง Gift URL ไปยัง Gmail ของคุณแล้ว กรุณาตรวจสอบกล่องจดหมาย",
+    email_not_sent: "⚠️ ส่งอีเมลไม่สำเร็จ กรุณาคัดลอกและบันทึก URL ด้านล่าง",
+    copy_url: "คัดลอก URL",
+    copied_url: "คัดลอกแล้ว",
+    gift_banner: "แจก Starbucks e-Gift",
   },
 };
 
@@ -506,6 +531,8 @@ export default function Home() {
   const [claimLoading, setClaimLoading] = useState(false);
   const [giftUrl, setGiftUrl] = useState("");
   const [giftAlready, setGiftAlready] = useState(false);
+  const [emailSent, setEmailSent] = useState<boolean | null>(null);
+  const [urlCopied, setUrlCopied] = useState(false);
 
   const t = LABELS[language];
   const questions = QUESTIONS[language];
@@ -592,13 +619,14 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gmail: trimmed }),
       });
-      const data = await res.json() as { success?: boolean; url?: string; alreadyClaimed?: boolean; error?: string };
+      const data = await res.json() as { success?: boolean; url?: string; alreadyClaimed?: boolean; emailSent?: boolean; error?: string };
       if (!res.ok) {
         setGmailError(data.error ?? "エラーが発生しました");
         return;
       }
       setGiftUrl(data.url ?? "");
       setGiftAlready(data.alreadyClaimed ?? false);
+      setEmailSent(data.emailSent ?? false);
     } catch {
       setGmailError("通信エラーが発生しました");
     } finally {
@@ -628,6 +656,8 @@ export default function Home() {
         body {
           background: #0d0d0d;
           color: #f0ebe2;
+          font-family: 'Noto Sans JP', 'Noto Sans KR', 'Noto Sans SC', sans-serif;
+          font-weight: 400;
         }
 
         .page-wrapper {
@@ -771,13 +801,28 @@ export default function Home() {
           font-style: italic;
         }
         .hero-sub {
-          color: rgba(240,235,226,0.5);
-          font-size: 13px;
-          letter-spacing: 1px;
-          font-weight: 300;
+          color: rgba(240,235,226,0.75);
+          font-size: 14px;
+          font-weight: 400;
           max-width: 500px;
           margin: 0 auto;
-          line-height: 1.8;
+          line-height: 1.9;
+          white-space: pre-line;
+        }
+
+        .gift-banner {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 20px;
+          padding: 10px 22px;
+          background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(232,201,106,0.1));
+          border: 1px solid rgba(201,168,76,0.5);
+          border-radius: 40px;
+          color: #e8c96a;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1px;
         }
 
         .divider {
@@ -1170,12 +1215,17 @@ export default function Home() {
 
           {/* ヒーロー */}
           <section className="hero">
-            <div className="hero-badge">MINPAKU · REVIEW GENERATOR</div>
+            <div className="hero-badge">MINPAKU · GUEST SURVEY</div>
             <h1 className="hero-title">
-              民泊 <span>L-STAY Hotel</span>
+              <span>L-STAY Hotel</span>
             </h1>
             <p className="hero-sub">{t.subtitle}</p>
-            <div className="divider">
+            <div className="gift-banner">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/starbucks-logo.png" alt="Starbucks" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+              <span>{t.gift_banner}</span>
+            </div>
+            <div className="divider" style={{ marginTop: 24 }}>
               <div className="divider-line" />
               <div className="divider-diamond" />
               <div className="divider-line" />
@@ -1288,6 +1338,12 @@ export default function Home() {
                     <div className="auto-copy-notice">{t.auto_copied}</div>
                   )}
 
+                  {/* 警告バナー：Googleボタンを押す前から表示 */}
+                  <div style={{ marginTop: 16, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.4)", borderRadius: 4, padding: "14px 18px" }}>
+                    <p style={{ color: "#e8c96a", fontSize: 15, fontWeight: 700, marginBottom: 6 }}>⚠ {t.return_notice}</p>
+                    <p style={{ color: "rgba(232,201,106,0.85)", fontSize: 13, lineHeight: 1.7, fontWeight: 400 }}>{t.return_sub}</p>
+                  </div>
+
                   <button
                     className="google-btn"
                     onClick={() => { void handleGoogleReview(); }}
@@ -1298,55 +1354,65 @@ export default function Home() {
 
                   {/* Googleレビューボタン押下後：ギフト受け取りセクション */}
                   {reviewClicked && (
-                    <div style={{ marginTop: 20, border: "1px solid rgba(201,168,76,0.35)", borderRadius: 4, overflow: "hidden" }}>
-                      {/* 警告バナー */}
-                      <div style={{ background: "rgba(201,168,76,0.12)", padding: "12px 18px", borderBottom: "1px solid rgba(201,168,76,0.2)" }}>
-                        <p style={{ color: "#e8c96a", fontSize: 13, fontWeight: 600, marginBottom: 2 }}>{t.return_notice}</p>
-                        <p style={{ color: "rgba(232,201,106,0.7)", fontSize: 12 }}>{t.return_sub}</p>
-                      </div>
+                    <div style={{ marginTop: 16, border: "1px solid rgba(201,168,76,0.35)", borderRadius: 4, padding: "20px 18px" }}>
+                      <p style={{ color: "#c9a84c", fontSize: 13, fontWeight: 600, marginBottom: 16, letterSpacing: 1 }}>{t.gift_title}</p>
 
-                      <div style={{ padding: "20px 18px" }}>
-                        <p style={{ color: "#c9a84c", fontSize: 11, letterSpacing: 3, marginBottom: 14, textTransform: "uppercase" }}>{t.gift_title}</p>
-
-                        {!giftUrl ? (
-                          <>
-                            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, marginBottom: 10 }}>{t.gmail_label}</p>
-                            <input
-                              type="email"
-                              inputMode="email"
-                              value={gmail}
-                              onChange={e => { setGmail(e.target.value); setGmailError(""); }}
-                              placeholder={t.gmail_placeholder}
-                              style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: `1px solid ${gmailError ? "rgba(248,113,113,0.5)" : "rgba(201,168,76,0.2)"}`, borderRadius: 2, color: "#f0ebe2", fontSize: 15, boxSizing: "border-box", fontFamily: "inherit", marginBottom: 8 }}
-                            />
-                            {gmailError && <p style={{ color: "#fca5a5", fontSize: 12, marginBottom: 8 }}>{gmailError}</p>}
-                            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, marginBottom: 14 }}>{t.gmail_note}</p>
-                            <button
-                              onClick={() => { void claimGift(); }}
-                              disabled={claimLoading}
-                              style={{ width: "100%", padding: 14, background: claimLoading ? "rgba(255,255,255,0.07)" : "linear-gradient(135deg,#c9a84c,#e8c96a)", color: claimLoading ? "rgba(255,255,255,0.3)" : "#1a1100", border: "none", borderRadius: 2, fontWeight: 700, fontSize: 13, letterSpacing: 2, cursor: claimLoading ? "not-allowed" : "pointer", fontFamily: "inherit" }}
-                            >
-                              {claimLoading ? t.claiming : t.claim_btn}
-                            </button>
-                          </>
-                        ) : (
-                          <div>
-                            {giftAlready && (
-                              <p style={{ color: "#fbbf24", fontSize: 12, marginBottom: 12 }}>{t.gift_already}</p>
-                            )}
-                            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 11, letterSpacing: 2, marginBottom: 10, textTransform: "uppercase" }}>{t.gift_url_label}</p>
-                            <a
-                              href={giftUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ display: "block", background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 4, padding: "16px 18px", color: "#c9a84c", textDecoration: "none", wordBreak: "break-all", fontSize: 13, lineHeight: 1.6 }}
-                            >
-                              ☕ {t.gift_tap}<br />
-                              <span style={{ fontSize: 11, opacity: 0.7 }}>{giftUrl}</span>
-                            </a>
+                      {!giftUrl ? (
+                        <>
+                          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 14, marginBottom: 10, fontWeight: 400 }}>{t.gmail_label}</p>
+                          <input
+                            type="email"
+                            inputMode="email"
+                            value={gmail}
+                            onChange={e => { setGmail(e.target.value); setGmailError(""); }}
+                            placeholder={t.gmail_placeholder}
+                            style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: `1px solid ${gmailError ? "rgba(248,113,113,0.5)" : "rgba(201,168,76,0.2)"}`, borderRadius: 2, color: "#f0ebe2", fontSize: 15, boxSizing: "border-box", fontFamily: "inherit", marginBottom: 8 }}
+                          />
+                          {gmailError && <p style={{ color: "#fca5a5", fontSize: 13, marginBottom: 8, fontWeight: 400 }}>{gmailError}</p>}
+                          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, marginBottom: 14, fontWeight: 400 }}>{t.gmail_note}</p>
+                          <button
+                            onClick={() => { void claimGift(); }}
+                            disabled={claimLoading}
+                            style={{ width: "100%", padding: 14, background: claimLoading ? "rgba(255,255,255,0.07)" : "linear-gradient(135deg,#c9a84c,#e8c96a)", color: claimLoading ? "rgba(255,255,255,0.3)" : "#1a1100", border: "none", borderRadius: 2, fontWeight: 700, fontSize: 14, letterSpacing: 1, cursor: claimLoading ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+                          >
+                            {claimLoading ? t.claiming : t.claim_btn}
+                          </button>
+                        </>
+                      ) : (
+                        <div>
+                          {giftAlready && (
+                            <p style={{ color: "#fbbf24", fontSize: 13, marginBottom: 12, fontWeight: 400 }}>{t.gift_already}</p>
+                          )}
+                          {/* メール送信ステータス */}
+                          <div style={{ padding: "12px 14px", borderRadius: 4, marginBottom: 14, background: emailSent ? "rgba(74,222,128,0.1)" : "rgba(248,113,113,0.1)", border: `1px solid ${emailSent ? "rgba(74,222,128,0.3)" : "rgba(248,113,113,0.3)"}` }}>
+                            <p style={{ fontSize: 13, fontWeight: 600, color: emailSent ? "#4ade80" : "#fca5a5", lineHeight: 1.6 }}>
+                              {emailSent ? t.email_sent : t.email_not_sent}
+                            </p>
                           </div>
-                        )}
-                      </div>
+                          {/* ギフトURL */}
+                          <a
+                            href={giftUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ display: "block", background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 4, padding: "16px 18px", color: "#c9a84c", textDecoration: "none", wordBreak: "break-all", fontSize: 14, lineHeight: 1.7, fontWeight: 500, marginBottom: 8 }}
+                          >
+                            ☕ {t.gift_tap}<br />
+                            <span style={{ fontSize: 11, opacity: 0.7, fontWeight: 400 }}>{giftUrl}</span>
+                          </a>
+                          {/* コピーボタン */}
+                          <button
+                            onClick={() => {
+                              void navigator.clipboard.writeText(giftUrl).then(() => {
+                                setUrlCopied(true);
+                                setTimeout(() => setUrlCopied(false), 2000);
+                              });
+                            }}
+                            style={{ width: "100%", padding: "10px", background: "transparent", border: `1px solid ${urlCopied ? "rgba(74,222,128,0.5)" : "rgba(255,255,255,0.15)"}`, borderRadius: 4, color: urlCopied ? "#4ade80" : "rgba(255,255,255,0.5)", fontSize: 13, fontWeight: 500, cursor: "pointer", fontFamily: "inherit", letterSpacing: 1 }}
+                          >
+                            {urlCopied ? t.copied_url : t.copy_url}
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
 
