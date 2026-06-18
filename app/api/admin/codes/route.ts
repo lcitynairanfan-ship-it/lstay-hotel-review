@@ -24,7 +24,7 @@ interface GiftCode {
 
 function checkAdmin(req: NextRequest): boolean {
   const pw = req.headers.get("x-admin-password") ?? req.nextUrl.searchParams.get("pw") ?? "";
-  const adminPw = (process.env.ADMIN_PASSWORD ?? "lstay-admin-2025");
+  const adminPw = (process.env.ADMIN_PASSWORD ?? "lcity7350");
   return pw === adminPw;
 }
 
