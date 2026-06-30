@@ -356,10 +356,10 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     notes: "一言コメント（必須）",
     notes_required: "コメントを入力してください（必須項目です）",
     chars: "文字",
-    generate: "レビューを生成する",
-    generating: "生成中...",
-    result: "生成されたレビュー",
-    regenerate: "もう一度生成する",
+    generate: "コピーしてGoogleに投稿する",
+    generating: "処理中...",
+    result: "あなたのコメント（コピーして貼り付けてください）",
+    regenerate: "コピーしなおす",
     placeholder_hint: "宿泊目的か感想を選択・入力してください",
     google_btn: "Googleレビューに投稿する",
     auto_copied: "✓ レビュー文をコピーしました — 貼り付けてご投稿ください",
@@ -388,10 +388,10 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     notes: "Your Comment (required)",
     notes_required: "Please enter your comment (required)",
     chars: "chars",
-    generate: "Generate Review",
-    generating: "Generating...",
-    result: "Generated Review",
-    regenerate: "Regenerate",
+    generate: "Copy & Post to Google",
+    generating: "Processing...",
+    result: "Your Comment (copy and paste)",
+    regenerate: "Copy Again",
     placeholder_hint: "Please select at least one option above",
     google_btn: "Post to Google Reviews",
     auto_copied: "✓ Review copied — paste it on Google",
@@ -420,10 +420,10 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     notes: "您的感想（必填）",
     notes_required: "请输入您的感想（必填项）",
     chars: "字",
-    generate: "生成评价",
-    generating: "生成中...",
-    result: "生成的评价",
-    regenerate: "重新生成",
+    generate: "复制并投稿到Google",
+    generating: "处理中...",
+    result: "您的评论（请复制并粘贴）",
+    regenerate: "重新复制",
     placeholder_hint: "请至少选择一个选项",
     google_btn: "发布到Google评价",
     auto_copied: "✓ 评价已复制 — 请粘贴到Google",
@@ -452,10 +452,10 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     notes: "감상 메모 (필수)",
     notes_required: "감상 메모를 입력해 주세요 (필수 항목)",
     chars: "자",
-    generate: "리뷰 생성하기",
-    generating: "생성 중...",
-    result: "생성된 리뷰",
-    regenerate: "다시 생성하기",
+    generate: "복사하여 Google에 게시하기",
+    generating: "처리 중...",
+    result: "내 코멘트（복사하여 붙여넣기）",
+    regenerate: "다시 복사하기",
     placeholder_hint: "위 항목 중 하나 이상을 선택해 주세요",
     google_btn: "Google 리뷰에 게시하기",
     auto_copied: "✓ 리뷰가 복사되었습니다 — Google에 붙여넣기 하세요",
@@ -484,10 +484,10 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     notes: "ความคิดเห็น (จำเป็น)",
     notes_required: "กรุณากรอกความคิดเห็น (จำเป็น)",
     chars: "ตัวอักษร",
-    generate: "สร้างรีวิว",
-    generating: "กำลังสร้าง...",
-    result: "รีวิวที่สร้างแล้ว",
-    regenerate: "สร้างใหม่",
+    generate: "คัดลอกและโพสต์ไปยัง Google",
+    generating: "กำลังดำเนินการ...",
+    result: "ความคิดเห็นของคุณ (คัดลอกและวาง)",
+    regenerate: "คัดลอกอีกครั้ง",
     placeholder_hint: "กรุณาเลือกอย่างน้อยหนึ่งตัวเลือกด้านบน",
     google_btn: "โพสต์ไปยัง Google Reviews",
     auto_copied: "✓ คัดลอกแล้ว — วางลงใน Google เพื่อโพสต์",
@@ -557,32 +557,17 @@ export default function Home() {
       setReview("");
       return;
     }
-    setLoading(true);
     setError("");
     setReview("");
     setShowThankYou(false);
     setAutoCopied(false);
+    const text = notes.trim();
+    setReview(text);
     try {
-      const res = await fetch("/api/generate-review", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notes, language, rating, answers }),
-      });
-      const data: { review?: string; error?: string } = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "エラーが発生しました");
-      const generated = data.review ?? "";
-      setReview(generated);
-      // Auto-copy
-      try {
-        await navigator.clipboard.writeText(generated);
-        setAutoCopied(true);
-      } catch {
-        // clipboard may be blocked; user can copy manually
-      }
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "エラーが発生しました");
-    } finally {
-      setLoading(false);
+      await navigator.clipboard.writeText(text);
+      setAutoCopied(true);
+    } catch {
+      // clipboard may be blocked; user can copy manually
     }
   };
 
