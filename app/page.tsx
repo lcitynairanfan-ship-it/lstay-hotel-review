@@ -365,12 +365,16 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ レビュー文をコピーしました — 貼り付けてご投稿ください",
     thank_you: "アンケートにご協力ありがとうございました。\nご意見を今後のサービス向上に活かしてまいります。",
     return_notice: "⚠️ 投稿後、必ずこの画面に戻ってきてください",
-    return_sub: "下のフォームにGmailを入力するとスタバギフトURLをお渡しします",
+    return_sub: "下のフォームに入力するとスタバギフトURLをお渡しします",
     gift_title: "☕ スタバギフトを受け取る",
+    name_label: "お名前（必須）",
+    name_placeholder: "例：山田 太郎",
+    name_required: "お名前を入力してください",
     gmail_label: "Gmailアドレスを入力",
     gmail_placeholder: "example@gmail.com",
     gmail_note: "入力したGmailアドレスにギフトURLをメールで送信します",
     claim_btn: "ギフトURLを受け取る",
+    fraud_warning: "⚠️ 不正取得が判明した場合、しかるべき法的措置を取る場合があります。",
     claiming: "処理中...",
     gift_url_label: "スタバギフトURL",
     gift_already: "このGmailアドレスはすでに受け取り済みです",
@@ -397,12 +401,16 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ Review copied — paste it on Google",
     thank_you: "Thank you for your feedback.\nWe will use your comments to improve our service.",
     return_notice: "⚠️ Please return to this page after posting",
-    return_sub: "Enter your Gmail below to receive a Starbucks gift",
+    return_sub: "Fill in the form below to receive a Starbucks gift",
     gift_title: "☕ Receive Starbucks Gift",
+    name_label: "Your Name (required)",
+    name_placeholder: "e.g. Taro Yamada",
+    name_required: "Please enter your name",
     gmail_label: "Enter Gmail Address",
     gmail_placeholder: "example@gmail.com",
     gmail_note: "The gift URL will be sent to this Gmail address",
     claim_btn: "Receive Gift URL",
+    fraud_warning: "⚠️ Any fraudulent claims will be subject to appropriate legal action.",
     claiming: "Processing...",
     gift_url_label: "Starbucks Gift URL",
     gift_already: "This Gmail has already received a gift",
@@ -429,12 +437,16 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ 评价已复制 — 请粘贴到Google",
     thank_you: "感谢您参与问卷调查。\n我们将认真参考您的意见，不断改善服务。",
     return_notice: "⚠️ 发布后请务必返回此页面",
-    return_sub: "在下方输入Gmail即可获得星巴克礼品URL",
+    return_sub: "在下方填写表格即可获得星巴克礼品URL",
     gift_title: "☕ 领取星巴克礼品",
+    name_label: "您的姓名（必填）",
+    name_placeholder: "例：山田 太郎",
+    name_required: "请输入您的姓名",
     gmail_label: "输入Gmail地址",
     gmail_placeholder: "example@gmail.com",
     gmail_note: "礼品URL将通过邮件发送到您的Gmail地址",
     claim_btn: "领取礼品URL",
+    fraud_warning: "⚠️ 如发现不当领取，将采取相应法律措施。",
     claiming: "处理中...",
     gift_url_label: "星巴克礼品URL",
     gift_already: "该Gmail地址已领取过礼品",
@@ -461,12 +473,16 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ 리뷰가 복사되었습니다 — Google에 붙여넣기 하세요",
     thank_you: "설문에 참여해 주셔서 감사합니다.\n소중한 의견을 서비스 개선에 반영하겠습니다.",
     return_notice: "⚠️ 게시 후 반드시 이 화면으로 돌아와 주세요",
-    return_sub: "아래 Gmail을 입력하면 스타벅스 기프트를 받을 수 있습니다",
+    return_sub: "아래 양식을 작성하면 스타벅스 기프트를 받을 수 있습니다",
     gift_title: "☕ 스타벅스 기프트 받기",
+    name_label: "이름（필수）",
+    name_placeholder: "예：야마다 타로",
+    name_required: "이름을 입력해 주세요",
     gmail_label: "Gmail 주소 입력",
     gmail_placeholder: "example@gmail.com",
     gmail_note: "입력한 Gmail 주소로 기프트 URL을 이메일로 발송합니다",
     claim_btn: "기프트 URL 받기",
+    fraud_warning: "⚠️ 부정 취득이 확인될 경우 적절한 법적 조치를 취할 수 있습니다.",
     claiming: "처리 중...",
     gift_url_label: "스타벅스 기프트 URL",
     gift_already: "이 Gmail은 이미 기프트를 받았습니다",
@@ -493,12 +509,16 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     auto_copied: "✓ คัดลอกแล้ว — วางลงใน Google เพื่อโพสต์",
     thank_you: "ขอบคุณที่ร่วมตอบแบบสอบถาม\nเราจะนำความคิดเห็นของคุณไปปรับปรุงบริการต่อไป",
     return_notice: "⚠️ กรุณากลับมาที่หน้านี้หลังโพสต์",
-    return_sub: "กรอก Gmail ด้านล่างเพื่อรับ Starbucks Gift",
+    return_sub: "กรอกแบบฟอร์มด้านล่างเพื่อรับ Starbucks Gift",
     gift_title: "☕ รับของขวัญ Starbucks",
+    name_label: "ชื่อของคุณ（จำเป็น）",
+    name_placeholder: "เช่น: ยามาดะ ทาโร่",
+    name_required: "กรุณากรอกชื่อของคุณ",
     gmail_label: "กรอกที่อยู่ Gmail",
     gmail_placeholder: "example@gmail.com",
     gmail_note: "Gift URL จะถูกส่งไปยังที่อยู่ Gmail ที่คุณกรอก",
     claim_btn: "รับ Gift URL",
+    fraud_warning: "⚠️ หากพบการรับของขวัญโดยทุจริต จะดำเนินการตามกฎหมายที่เหมาะสม",
     claiming: "กำลังดำเนินการ...",
     gift_url_label: "Starbucks Gift URL",
     gift_already: "Gmail นี้ได้รับของขวัญแล้ว",
@@ -527,6 +547,7 @@ export default function Home() {
 
   // ギフト受け取りフロー
   const [reviewClicked, setReviewClicked] = useState(false);
+  const [guestName, setGuestName] = useState("");
   const [gmail, setGmail] = useState("");
   const [gmailError, setGmailError] = useState("");
   const [claimLoading, setClaimLoading] = useState(false);
@@ -592,6 +613,10 @@ export default function Home() {
   };
 
   const claimGift = async () => {
+    if (!guestName.trim()) {
+      setGmailError(t.name_required);
+      return;
+    }
     const trimmed = gmail.trim();
     if (!/^[^\s@]+@gmail\.com$/i.test(trimmed)) {
       setGmailError(t.gmail_invalid);
@@ -603,7 +628,7 @@ export default function Home() {
       const res = await fetch("/api/gift/claim", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gmail: trimmed }),
+        body: JSON.stringify({ gmail: trimmed, name: guestName.trim() }),
       });
       const data = await res.json() as { success?: boolean; url?: string; alreadyClaimed?: boolean; emailSent?: boolean; error?: string };
       if (!res.ok) {
@@ -1344,6 +1369,15 @@ export default function Home() {
 
                       {!giftUrl ? (
                         <>
+                          <p style={{ color: "rgba(248,113,113,0.85)", fontSize: 12, marginBottom: 14, lineHeight: 1.6, fontWeight: 400 }}>{t.fraud_warning}</p>
+                          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 14, marginBottom: 6, fontWeight: 400 }}>{t.name_label}</p>
+                          <input
+                            type="text"
+                            value={guestName}
+                            onChange={e => setGuestName(e.target.value)}
+                            placeholder={t.name_placeholder}
+                            style={{ width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 2, color: "#f0ebe2", fontSize: 15, boxSizing: "border-box", fontFamily: "inherit", marginBottom: 14 }}
+                          />
                           <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 14, marginBottom: 10, fontWeight: 400 }}>{t.gmail_label}</p>
                           <input
                             type="email"

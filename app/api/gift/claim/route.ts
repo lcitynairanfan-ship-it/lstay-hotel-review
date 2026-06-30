@@ -77,10 +77,14 @@ async function sendGiftEmail(
 }
 
 export async function POST(req: NextRequest) {
-  const { gmail } = await req.json() as { gmail?: string };
+  const { gmail, name } = await req.json() as { gmail?: string; name?: string };
   if (!gmail || !/^[^\s@]+@gmail\.com$/i.test(gmail)) {
     return NextResponse.json({ error: "有効なGmailアドレスを入力してください" }, { status: 400 });
   }
+  if (!name || !name.trim()) {
+    return NextResponse.json({ error: "お名前を入力してください" }, { status: 400 });
+  }
+  const guestName = name.trim();
 
   const { env } = getRequestContext();
   const db = (env as Record<string, unknown>).GIFT_DB as D1Database | undefined;
@@ -118,8 +122,8 @@ export async function POST(req: NextRequest) {
   }
 
   await db
-    .prepare("UPDATE gift_codes SET used = 1, recipient_gmail = ?, distributed_at = datetime('now') WHERE id = ?")
-    .bind(normalizedGmail, code.id)
+    .prepare("UPDATE gift_codes SET used = 1, recipient_gmail = ?, recipient_name = ?, distributed_at = datetime('now') WHERE id = ?")
+    .bind(normalizedGmail, guestName, code.id)
     .run();
 
   const emailSent = resendApiKey
