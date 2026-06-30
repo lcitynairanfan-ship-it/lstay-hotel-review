@@ -1399,6 +1399,9 @@ export default function Home() {
                             ☕ {t.gift_tap}<br />
                             <span style={{ fontSize: 11, opacity: 0.7, fontWeight: 400 }}>{giftUrl}</span>
                           </a>
+                          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 8, marginBottom: 0, lineHeight: 1.6 }}>
+                            ⚠️ Valid in Japan only. International guests, please use before returning home.
+                          </p>
                           {/* コピーボタン */}
                           <button
                             onClick={() => {

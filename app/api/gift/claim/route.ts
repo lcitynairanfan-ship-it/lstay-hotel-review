@@ -37,7 +37,8 @@ function buildEmailHtml(url: string): string {
       <div style="background:#fff8e8;border-left:3px solid #c9a84c;padding:12px 16px;border-radius:0 4px 4px 0;">
         <p style="margin:0;font-size:12px;color:#666;line-height:1.7;">
           ⚠️ URLには有効期限があります。お早めにご利用ください。<br>
-          ⚠️ このURLは1回限り有効です。第三者への共有はご遠慮ください。
+          ⚠️ このURLは1回限り有効です。第三者への共有はご遠慮ください。<br>
+          ⚠️ Valid in Japan only. International guests, please use before returning home.
         </p>
       </div>
     </div>
