@@ -18,6 +18,10 @@ async function checkRateLimit(req: NextRequest): Promise<boolean> {
       req.headers.get("CF-Connecting-IP") ||
       req.headers.get("X-Forwarded-For")?.split(",")[0].trim() ||
       "unknown";
+
+    const bypassIps = (env as Record<string, unknown>).RATE_LIMIT_BYPASS_IPS as string | undefined;
+    if (bypassIps && bypassIps.split(",").map(s => s.trim()).includes(ip)) return true;
+
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     const key = `rl:${ip}:${today}`;
 
