@@ -48,6 +48,34 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ total, used, remaining: total - used, codes: results });
 }
 
+// PATCH: コードのused状態をトグル
+export async function PATCH(req: NextRequest) {
+  if (!checkAdmin(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id, used, recipient_gmail } = await req.json() as { id: number; used: number; recipient_gmail?: string };
+  if (typeof id !== "number" || typeof used !== "number") {
+    return NextResponse.json({ error: "id と used が必要です" }, { status: 400 });
+  }
+
+  const { env } = getRequestContext();
+  const db = (env as Record<string, unknown>).GIFT_DB as D1Database | undefined;
+  if (!db) return NextResponse.json({ error: "DB未設定" }, { status: 500 });
+
+  if (used === 1) {
+    await db.prepare(
+      "UPDATE gift_codes SET used = 1, recipient_gmail = ?, distributed_at = datetime('now') WHERE id = ?"
+    ).bind(recipient_gmail ?? null, id).run();
+  } else {
+    await db.prepare(
+      "UPDATE gift_codes SET used = 0, recipient_gmail = NULL, distributed_at = NULL WHERE id = ?"
+    ).bind(id).run();
+  }
+
+  return NextResponse.json({ success: true });
+}
+
 // POST: URLリストを追加インポート（改行区切り）
 export async function POST(req: NextRequest) {
   if (!checkAdmin(req)) {

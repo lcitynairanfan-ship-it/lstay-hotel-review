@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "L-STAY HOTEL | レビュー生成",
-  description: "民泊 L-STAY HOTEL のレビューをAIで自動生成します",
+  title: "L-STAY HOTEL | ご宿泊アンケート",
+  description: "アンケートにご回答いただくと、スターバックスeギフトをプレゼント！",
 };
 
 export default function RootLayout({

@@ -76,6 +76,26 @@ export default function AdminPage() {
     }
   };
 
+  const toggleUsed = async (id: number, currentUsed: number) => {
+    const newUsed = currentUsed === 1 ? 0 : 1;
+    let gmail: string | undefined;
+    if (newUsed === 1) {
+      const input = window.prompt("配布先Gmailアドレスを入力（任意）:");
+      gmail = input?.trim() || undefined;
+    }
+    const res = await fetch("/api/admin/codes", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-password": password },
+      body: JSON.stringify({ id, used: newUsed, recipient_gmail: gmail }),
+    });
+    if (res.ok) {
+      await fetchCodes(password);
+    } else {
+      const j = await res.json() as { error?: string };
+      alert(j.error ?? "エラー");
+    }
+  };
+
   const filteredCodes = data?.codes.filter(c => {
     if (activeTab === "distributed") return c.used === 1;
     if (activeTab === "unused") return c.used === 0;
@@ -176,7 +196,7 @@ export default function AdminPage() {
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid rgba(201,168,76,0.2)" }}>
-                    {["ID", "ステータス", "URL", "配布先Gmail", "配布日時"].map(h => (
+                    {["ID", "ステータス", "URL", "配布先Gmail", "配布日時", "操作"].map(h => (
                       <th key={h} style={{ padding: "10px 12px", textAlign: "left", color: "rgba(201,168,76,0.7)", letterSpacing: 2, fontWeight: 400, whiteSpace: "nowrap" }}>{h}</th>
                     ))}
                   </tr>
@@ -197,10 +217,27 @@ export default function AdminPage() {
                       </td>
                       <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.6)", fontFamily: "monospace" }}>{c.recipient_gmail ?? "—"}</td>
                       <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>{c.distributed_at ? c.distributed_at.replace("T", " ").slice(0, 16) : "—"}</td>
+                      <td style={{ padding: "10px 12px", whiteSpace: "nowrap" }}>
+                        {c.used ? (
+                          <button
+                            onClick={() => { void toggleUsed(c.id, c.used); }}
+                            style={{ padding: "4px 10px", fontSize: 10, letterSpacing: 1, cursor: "pointer", borderRadius: 2, fontFamily: "sans-serif", background: "transparent", border: "1px solid rgba(248,113,113,0.4)", color: "#f87171" }}
+                          >
+                            未配布に戻す
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => { void toggleUsed(c.id, c.used); }}
+                            style={{ padding: "4px 10px", fontSize: 10, letterSpacing: 1, cursor: "pointer", borderRadius: 2, fontFamily: "sans-serif", background: "transparent", border: "1px solid rgba(74,222,128,0.4)", color: "#4ade80" }}
+                          >
+                            配布済にする
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                   {filteredCodes.length === 0 && (
-                    <tr><td colSpan={5} style={{ padding: 24, textAlign: "center", color: "rgba(255,255,255,0.2)" }}>データがありません</td></tr>
+                    <tr><td colSpan={6} style={{ padding: 24, textAlign: "center", color: "rgba(255,255,255,0.2)" }}>データがありません</td></tr>
                   )}
                 </tbody>
               </table>
