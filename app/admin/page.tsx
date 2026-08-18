@@ -6,6 +6,7 @@ interface GiftCode {
   id: number;
   url: string;
   used: number;
+  recipient_name: string | null;
   recipient_gmail: string | null;
   distributed_at: string | null;
   created_at: string;
@@ -102,6 +103,19 @@ export default function AdminPage() {
     return true;
   }) ?? [];
 
+  const exportCsv = () => {
+    const distributed = data?.codes.filter(c => c.used === 1) ?? [];
+    const header = "ID,お名前,Gmail,URL,配布日時";
+    const rows = distributed.map(c =>
+      `${c.id},"${c.recipient_name ?? ""}","${c.recipient_gmail ?? ""}","${c.url}","${c.distributed_at ?? ""}"`
+    );
+    const blob = new Blob(["﻿" + header + "\n" + rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `lstay_gift_distributed_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  };
+
   if (!authed) {
     return (
       <div style={{ minHeight: "100vh", background: "#0d0d0d", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif" }}>
@@ -189,6 +203,9 @@ export default function AdminPage() {
               <button onClick={() => { void fetchCodes(password); }} style={{ marginLeft: "auto", background: "transparent", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.3)", padding: "6px 14px", borderRadius: 2, cursor: "pointer", fontSize: 11 }}>
                 更新
               </button>
+              <button onClick={exportCsv} style={{ background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.4)", color: "#c9a84c", padding: "6px 14px", borderRadius: 2, cursor: "pointer", fontSize: 11, letterSpacing: 1 }}>
+                📥 配布記録CSV
+              </button>
             </div>
 
             {/* テーブル */}
@@ -196,7 +213,7 @@ export default function AdminPage() {
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid rgba(201,168,76,0.2)" }}>
-                    {["ID", "ステータス", "URL", "配布先Gmail", "配布日時", "操作"].map(h => (
+                    {["ID", "ステータス", "URL", "お名前", "配布先Gmail", "配布日時", "操作"].map(h => (
                       <th key={h} style={{ padding: "10px 12px", textAlign: "left", color: "rgba(201,168,76,0.7)", letterSpacing: 2, fontWeight: 400, whiteSpace: "nowrap" }}>{h}</th>
                     ))}
                   </tr>
@@ -215,6 +232,7 @@ export default function AdminPage() {
                           {c.url.slice(0, 50)}...
                         </a>
                       </td>
+                      <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.6)" }}>{c.recipient_name ?? "—"}</td>
                       <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.6)", fontFamily: "monospace" }}>{c.recipient_gmail ?? "—"}</td>
                       <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>{c.distributed_at ? c.distributed_at.replace("T", " ").slice(0, 16) : "—"}</td>
                       <td style={{ padding: "10px 12px", whiteSpace: "nowrap" }}>
@@ -237,7 +255,7 @@ export default function AdminPage() {
                     </tr>
                   ))}
                   {filteredCodes.length === 0 && (
-                    <tr><td colSpan={6} style={{ padding: 24, textAlign: "center", color: "rgba(255,255,255,0.2)" }}>データがありません</td></tr>
+                    <tr><td colSpan={7} style={{ padding: 24, textAlign: "center", color: "rgba(255,255,255,0.2)" }}>データがありません</td></tr>
                   )}
                 </tbody>
               </table>
