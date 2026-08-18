@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
   if (!db) return NextResponse.json({ error: "DB未設定" }, { status: 500 });
 
   const { results } = await db.prepare(
-    "SELECT * FROM gift_codes ORDER BY id ASC"
+    "SELECT * FROM gift_codes ORDER BY used DESC, distributed_at ASC, id ASC"
   ).all<GiftCode>();
 
   const total = results.length;
