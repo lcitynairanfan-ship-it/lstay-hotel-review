@@ -366,6 +366,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     thank_you: "アンケートにご協力ありがとうございました。\nご意見を今後のサービス向上に活かしてまいります。",
     return_notice: "⚠️ 投稿後、必ずこの画面に戻ってきてください",
     return_sub: "下のフォームに入力するとスタバギフトURLをお渡しします",
+    browser_notice: "📱 Safari または Google Chrome でご利用ください",
     gift_title: "☕ スタバギフトを受け取る",
     name_label: "お名前（必須）",
     name_placeholder: "例：山田 太郎",
@@ -402,6 +403,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     thank_you: "Thank you for your feedback.\nWe will use your comments to improve our service.",
     return_notice: "⚠️ Please return to this page after posting",
     return_sub: "Fill in the form below to receive a Starbucks gift",
+    browser_notice: "📱 Please use Safari or Google Chrome",
     gift_title: "☕ Receive Starbucks Gift",
     name_label: "Your Name (required)",
     name_placeholder: "e.g. Taro Yamada",
@@ -438,6 +440,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     thank_you: "感谢您参与问卷调查。\n我们将认真参考您的意见，不断改善服务。",
     return_notice: "⚠️ 发布后请务必返回此页面",
     return_sub: "在下方填写表格即可获得星巴克礼品URL",
+    browser_notice: "📱 请使用 Safari 或 Google Chrome 浏览器",
     gift_title: "☕ 领取星巴克礼品",
     name_label: "您的姓名（必填）",
     name_placeholder: "例：山田 太郎",
@@ -474,6 +477,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     thank_you: "설문에 참여해 주셔서 감사합니다.\n소중한 의견을 서비스 개선에 반영하겠습니다.",
     return_notice: "⚠️ 게시 후 반드시 이 화면으로 돌아와 주세요",
     return_sub: "아래 양식을 작성하면 스타벅스 기프트를 받을 수 있습니다",
+    browser_notice: "📱 Safari 또는 Google Chrome을 사용해 주세요",
     gift_title: "☕ 스타벅스 기프트 받기",
     name_label: "이름（필수）",
     name_placeholder: "예：야마다 타로",
@@ -510,6 +514,7 @@ const LABELS: Record<LangCode, Record<string, string>> = {
     thank_you: "ขอบคุณที่ร่วมตอบแบบสอบถาม\nเราจะนำความคิดเห็นของคุณไปปรับปรุงบริการต่อไป",
     return_notice: "⚠️ กรุณากลับมาที่หน้านี้หลังโพสต์",
     return_sub: "กรอกแบบฟอร์มด้านล่างเพื่อรับ Starbucks Gift",
+    browser_notice: "📱 กรุณาใช้ Safari หรือ Google Chrome",
     gift_title: "☕ รับของขวัญ Starbucks",
     name_label: "ชื่อของคุณ（จำเป็น）",
     name_placeholder: "เช่น: ยามาดะ ทาโร่",
@@ -1224,6 +1229,13 @@ export default function Home() {
             </div>
           </header>
 
+          {/* ブラウザ推奨バナー */}
+          <div style={{ background: "#1a1a2e", borderBottom: "2px solid #4a90d9", padding: "10px 20px", textAlign: "center" }}>
+            <p style={{ color: "#7ec8f0", fontSize: 14, fontWeight: 700, margin: 0, letterSpacing: 0.5 }}>
+              {t.browser_notice}
+            </p>
+          </div>
+
           {/* ヒーロー */}
           <section className="hero">
             <div className="hero-badge">MINPAKU · GUEST SURVEY</div>
@@ -1349,9 +1361,11 @@ export default function Home() {
                   )}
 
                   {/* 警告バナー：Googleボタンを押す前から表示 */}
-                  <div style={{ marginTop: 16, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.4)", borderRadius: 4, padding: "14px 18px" }}>
-                    <p style={{ color: "#e8c96a", fontSize: 15, fontWeight: 700, marginBottom: 6 }}>⚠ {t.return_notice}</p>
-                    <p style={{ color: "rgba(232,201,106,0.85)", fontSize: 13, lineHeight: 1.7, fontWeight: 400 }}>{t.return_sub}</p>
+                  <div style={{ marginTop: 16, background: "rgba(220,53,69,0.15)", border: "3px solid rgba(220,53,69,0.8)", borderRadius: 6, padding: "18px 20px", textAlign: "center" }}>
+                    <p style={{ color: "#ff6b6b", fontSize: 20, fontWeight: 900, marginBottom: 8, letterSpacing: 0.5, lineHeight: 1.4 }}>
+                      {t.return_notice}
+                    </p>
+                    <p style={{ color: "rgba(255,150,150,0.95)", fontSize: 15, lineHeight: 1.7, fontWeight: 600, margin: 0 }}>{t.return_sub}</p>
                   </div>
 
                   <button
